@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LOG_PATH" value="/data/langlearnbot/log"/>
+	<property name="SERVER_IP" value="localhost"/>
+	<property name="SERVER_PORT" value="8001"/>
+	<property name="APPLICATION_NAME" value="langlearnbot"/>
+	
+	<appender name="FILE-LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${APPLICATION_NAME}.${SERVER_PORT}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>
+            	${LOG_PATH}/archived/%d{yyyy-MM-dd}.%i.${APPLICATION_NAME}.${SERVER_PORT}.zip
+            </fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+		
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%-5level|%d{yyyy-MM-dd HH:mm:ss}|%X{xid}|%X{external_ip}|${SERVER_IP}|%X{internal_id}|%X{message_type}|${APPLICATION_NAME}|%X{service_application}|%X{process}|%X{key}|%X{code}|%X{desc}|%X{exception}|%msg%n
+			</Pattern>
+		</encoder>
+	</appender>
+	
+	<root level="INFO">
+        <appender-ref ref="FILE-LOG"/>
+    </root>
+</configuration>

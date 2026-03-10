@@ -1,0 +1,32 @@
+spring:
+   main:
+      banner-mode: log
+   application:
+      name: langlearnbot
+
+   profiles:
+      active:
+      - deploy
+
+logging:
+   config: classpath:logback-spring.xml
+   level:
+      root: WARN
+
+springdoc:
+   show-actuator: false
+   swagger-ui:
+      disable-swagger-default-url: true
+      path: /
+   use-management-port: false
+
+management:
+   endpoint:
+      shutdown:
+         access: UNRESTRICTED
+      info:
+         access: read-only
+   endpoints:
+      web:
+         exposure:
+            include: "*"
